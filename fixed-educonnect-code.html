@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect Features</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6c63ff;
+            --primary-light: #8a84ff;
+            --primary-dark: #5046e5;
+            --secondary-color: #12122a;
+            --background-color: #0a0a1a;
+            --card-bg: #1a1a32;
+            --accent-color: #ff6b9d;
+            --accent-secondary: #00d9b5;
+            --text-color: #f5f5f7;
+            --light-text: #b8b8c0;
+            --muted-text: #8a8a9a;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+       * {
+           box-sizing: border-box;
+           margin: 0;
+           padding: 0;
+          font-family: 'Alegreya SC', sans-serif;
+        }
+
+        /* Added background color to body */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .features-container::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(var(--primary-light), transparent 70%);
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .features-container::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(var(--accent-color), transparent 70%);
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .features-heading {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .features-heading h2 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .features-heading h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .features-heading p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(26, 26, 50, 0.6);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-dark);
+            color: var(--light-text);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            white-space: nowrap;
+            margin: 5px;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .filter-btn:hover::before, .filter-btn.active::before {
+            width: 100%;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: translateY(0);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(26, 26, 50, 0.8), rgba(10, 10, 26, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.02);
+        }
+
+        .feature-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card:hover .feature-icon-wrapper::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: var(--transition);
+        }
+
+        .feature-title {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            transition: var(--transition);
+            background: linear-gradient(45deg, var(--text-color), var(--light-text));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-card:hover .feature-title {
+            background: linear-gradient(45deg, var(--primary-light), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .feature-description {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+
+        .feature-btn {
+            margin-top: auto;
+            padding: 8px 24px;
+            background: transparent;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            color: var(--text-color);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        .feature-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 30px;
+            transition: var(--transition);
+            z-index: -2;
+            opacity: 0;
+        }
+
+        .feature-btn::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: var(--card-bg);
+            border-radius: 28px;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .feature-btn:hover::before {
+            opacity: 1;
+        }
+
+        .feature-btn:hover::after {
+            opacity: 0;
+        }
+
+        .feature-btn:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-stat {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            color: var(--muted-text);
+            background: rgba(10, 10, 26, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .feature-stat i {
+            margin-right: 8px;
+            color: var(--primary-light);
+        }
+
+        /* Simple fade-in animation */
+        .feature-card {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .feature-card:nth-child(7) { animation-delay: 0.7s; }
+        .feature-card:nth-child(8) { animation-delay: 0.8s; }
+        .feature-card:nth-child(9) { animation-delay: 0.9s; }
+
+        /* Glowing effect */
+        .glow {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            filter: blur(40px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .glow-1 {
+            top: 20%;
+            left: 10%;
+            background: var(--primary-color);
+        }
+
+        .glow-2 {
+            top: 60%;
+            right: 15%;
+            background: var(--accent-color);
+        }
+
+        .glow-3 {
+            bottom: 10%;
+            left: 20%;
+            background: var(--accent-secondary);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-dark);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 1024px) {
+            .features-container {
+                margin: 40px auto;
+                padding: 20px 15px;
+            }
+            
+            .features-heading {
+                margin-bottom: 40px;
+            }
+            
+            .features-grid {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .features-container {
+                margin: 30px auto;
+                padding: 15px 10px;
+            }
+            
+            .features-heading {
+                margin-bottom: 30px;
+            }
+            
+            .filter-container {
+                padding: 10px;
+                max-width: 95%;
+                overflow-x: auto;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                margin: 3px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+                padding: 0 5px;
+            }
+            
+            .feature-card {
+                padding: 20px 15px;
+            }
+            
+            .feature-icon-wrapper {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 15px;
+            }
+            
+            .feature-icon {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .features-container {
+                margin: 20px auto;
+                padding: 10px 5px;
+            }
+            
+            .features-heading h2::after {
+                width: 60px;
+            }
+            
+            .filter-container {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 10px 5px;
+                max-width: 100%;
+            }
+            
+            .filter-container::-webkit-scrollbar {
+                height: 4px;
+            }
+            
+            .filter-btn {
+                flex: 0 0 auto;
+                font-size: 0.75rem;
+                padding: 5px 10px;
+                margin: 2px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 0;
+            }
+            
+            .feature-card {
+                padding: 15px 10px;
+            }
+            
+            .feature-stat {
+                padding: 6px 10px;
+            }
+            
+            .feature-btn {
+                padding: 6px 18px;
+            }
+            
+            .tag {
+                font-size: 0.6rem;
+                padding: 3px 8px;
+            }
+        }
+        
+        /* Fix for small/older mobile devices */
+        @media (max-width: 320px) {
+            .features-heading h2 {
+                font-size: 1.5rem;
+            }
+            
+            .features-heading p {
+                font-size: 0.85rem;
+            }
+            
+            .filter-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            
+            .feature-title {
+                font-size: 1rem;
+            }
+            
+            .feature-description {
+                font-size: 0.8rem;
+            }
+            
+            .feature-stat {
+                font-size: 0.7rem;
+            }
+            
+            .feature-btn {
+                font-size: 0.75rem;
+                padding: 5px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+
+    <!-- Glow Effects -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <section class="features-container">
+        <div class="features-heading">
+            <h2>Our Features</h2>
+            <p>Explore the comprehensive tools and resources designed to enhance your AI and Data Science learning journey at IIT Jodhpur</p>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="learning">Learning</button>
+            <button class="filter-btn" data-filter="resources">Resources</button>
+            <button class="filter-btn" data-filter="tools">Tools</button>
+            <button class="filter-btn" data-filter="community">Community</button>
+        </div>
+        
+        <div class="features-grid" id="features-grid">
+            <!-- Assignments -->
+            <a href="#assignments" class="feature-card" data-category="learning">
+                <div class="tag">Popular</div>
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-book feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Assignments</h3>
+                <p class="feature-description">Get weekly AI & Data Science assignments with detailed solutions and expert feedback.</p>
+                <div class="feature-stat"><i class="fas fa-users"></i> 2,500+ students</div>
+                <button class="feature-btn">Explore</button>
+            </a>
+            
+            <!-- Live Sessions -->
+            <a href="#live-sessions" class="feature-card" data-category="learning">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-video feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Live Sessions</h3>
+                <p class="feature-description">Attend and access recordings of expert-led classes with summarized key points.</p>
+                <div class="feature-stat"><i class="fas fa-play-circle"></i> 200+ sessions</div>
+                <button class="feature-btn">Join</button>
+            </a>
+            
+            <!-- AI Tools -->
+            <a href="#ai-tools" class="feature-card" data-category="tools">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-cogs feature-icon"></i>
+                </div>
+                <h3 class="feature-title">AI Tools</h3>
+                <p class="feature-description">Access handpicked tools and frameworks for AI & Data Science projects and research.</p>
+                <div class="feature-stat"><i class="fas fa-tools"></i> 50+ tools</div>
+                <button class="feature-btn">Discover</button>
+            </a>
+            
+            <!-- Events & Notices -->
+            <a href="#events" class="feature-card" data-category="community">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-calendar-alt feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Events & Notices</h3>
+                <p class="feature-description">Stay updated with upcoming IIT Jodhpur events, workshops and important announcements.</p>
+                <div class="feature-stat"><i class="fas fa-bell"></i> Updated daily</div>
+                <button class="feature-btn">Check</button>
+            </a>
+            
+            <!-- Teacher Resources -->
+            <a href="#teacher-resources" class="feature-card" data-category="resources">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-chalkboard-teacher feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Teacher Resources</h3>
+                <p class="feature-description">Access notes, study materials and lecture slides from top educators and professors.</p>
+                <div class="feature-stat"><i class="fas fa-file-alt"></i> 1,000+ documents</div>
+                <button class="feature-btn">Access</button>
+            </a>
+            
+            <!-- Project Showcase -->
+            <a href="#projects" class="feature-card" data-category="community">
+                <div class="tag">New</div>
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-project-diagram feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Project Showcase</h3>
+                <p class="feature-description">Showcase your AI and Data Science projects and get feedback from peers and experts.</p>
+                <div class="feature-stat"><i class="fas fa-code-branch"></i> 300+ projects</div>
+                <button class="feature-btn">Submit</button>
+            </a>
+            
+            <!-- Study Groups -->
+            <a href="#study-groups" class="feature-card" data-category="community">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-users feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Study Groups</h3>
+                <p class="feature-description">Join or create study groups with fellow students to collaborate on assignments and projects.</p>
+                <div class="feature-stat"><i class="fas fa-user-friends"></i> 80+ active groups</div>
+                <button class="feature-btn">Join</button>
+            </a>
+            
+            <!-- Career Resources -->
+            <a href="#career" class="feature-card" data-category="resources">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-briefcase feature-icon"></i>
+                </div>
+                <h3 class="feature-title">Career Resources</h3>
+                <p class="feature-description">Access job postings, internship opportunities, and career guidance in AI and Data Science.</p>
+                <div class="feature-stat"><i class="fas fa-building"></i> 150+ partners</div>
+                <button class="feature-btn">Explore</button>
+            </a>
+            
+            <!-- AI Competitions -->
+            <a href="#competitions" class="feature-card" data-category="community">
+                <div class="tag">Hot</div>
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-trophy feature-icon"></i>
+                </div>
+                <h3 class="feature-title">AI Competitions</h3>
+                <p class="feature-description">Participate in AI and ML competitions to test your skills and win exciting prizes and recognition.</p>
+                <div class="feature-stat"><i class="fas fa-medal"></i> 10+ active contests</div>
+                <button class="feature-btn">Compete</button>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Feature filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-filter');
+                filterFeatures(category);
+            });
+        });
+        
+        function filterFeatures(category) {
+            const cards = document.querySelectorAll('.feature-card');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, 50);
+                } else {
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+        
+        // Scroll indicator
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            
+            document.getElementById('scroll-indicator').style.width = scrolled + '%';
+        });
+        
+        // Touch device detection and optimization
+        function isTouchDevice() {
+            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        }
+        
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+            
+            // Optimize filter buttons for touch
+            const filterContainer = document.querySelector('.filter-container');
+            filterContainer.addEventListener('touchstart', function() {
+                this.style.overflow = 'auto';
+            });
+        }
+        
+        // Set default filter on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            filterFeatures('all');
+            
+            // Adjust for viewport height on mobile browsers
+            function setViewportHeight() {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+        });
+        
+        // Prevent zoom on double tap for mobile devices
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            const DOUBLE_TAP_THRESHOLD = 300;
+            
+            if (lastTap && (now - lastTap) < DOUBLE_TAP_THRESHOLD) {
+                event.preventDefault();
+            }
+            
+            lastTap = now;
+        }, false);
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
